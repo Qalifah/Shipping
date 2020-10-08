@@ -70,6 +70,7 @@ type Leg struct {
 	UnloadTime   time.Time `json:"unload_time"`
 }
 
+
 func assemble(c *cargo.Cargo, events cargo.HandlingEventRepository) Cargo {
 	return Cargo{
 		TrackingID:           string(c.TrackingID),

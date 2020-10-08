@@ -1,0 +1,21 @@
+syntax = "proto3";
+package handlingpb;
+
+import "google/protobuf/timestamp.proto";
+
+
+service Handling {
+    rpc RegisterHandlingEvent(RegisterHandlingEventRequest) returns (RegisterHandlingEventReply) {}
+}
+
+message RegisterHandlingEventRequest {
+    google.protobuf.Timestamp completed = 1;
+    string tracking_id = 2;
+    string voyage_number = 3;
+    string location = 4;
+    int64   event_type = 5;
+}
+
+message RegisterHandlingEventReply {
+    string err = 1;
+}

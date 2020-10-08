@@ -1,0 +1,99 @@
+syntax = "proto3";
+package bookingpb;
+
+import "google/protobuf/timestamp.proto";
+
+service Booking {
+    rpc BookNewCargo(NewCargoRequest) returns (NewCargoReply) {}
+    rpc LoadCargo(LoadCargoRequest) returns (LoadCargoReply) {}
+    rpc RequestPossibleRoutesForCargo(RoutesForCargoRequest) returns (RoutesForCargoReply) {}
+    rpc AssignCargoToRoute(CargoToRouteRequest) returns (CargoToRouteReply) {}
+    rpc ChangeDestination(ChangeDestinationRequest) returns (ChangeDestinationReply) {}
+    rpc Cargos(CargosRequest) returns (CargosReply) {}
+    rpc Locations(LocationsRequest) returns (LocationsReply) {}
+}
+
+message Cargo {
+    google.protobuf.Timestamp arrival_deadline = 1;
+    string destination = 2;
+    repeated Leg legs = 3;
+    bool misrouted = 4;
+    string  origin = 5;
+    bool    routed = 6;
+    string  tracking_id = 7;
+}
+
+message Leg {
+    string  voyage_number = 1;
+    string  load_location = 2;
+    string  unload_location = 3;
+    google.protobuf.Timestamp load_time = 4;
+    google.protobuf.Timestamp unload_time = 5;
+}
+
+message Location {
+    string  unlcode = 1;
+    string  name = 2;
+}
+
+message Itinerary {
+    repeated Leg legs = 1;
+}
+
+message NewCargoRequest {
+    string  origin = 1;
+    string  destination = 2;
+    google.protobuf.Timestamp deadline = 3;
+}
+
+message NewCargoReply {
+    string  tracking_id = 1;
+    string  err = 2;
+}
+
+message LoadCargoRequest {
+    string  tracking_id = 1;
+}
+
+message LoadCargoReply {
+    Cargo cargo = 1;
+    string err = 2;
+}
+
+message RoutesForCargoRequest {
+    string tracking_id = 1;
+}
+
+message RoutesForCargoReply {
+    repeated Itinerary itineraries = 1;
+}
+
+message CargoToRouteRequest {
+    string tracking_id = 1;
+    Itinerary itinerary = 2;
+}
+
+message CargoToRouteReply {
+    string err = 1;
+}
+
+message ChangeDestinationRequest {
+    string tracking_id = 1;
+    string destination = 2;
+}
+
+message ChangeDestinationReply {
+    string err = 1;
+}
+
+message CargosRequest {}
+
+message CargosReply {
+    repeated Cargo cargos = 1;
+}
+
+message LocationsRequest {}
+
+message LocationsReply {
+    repeated Location locations = 1;
+}
