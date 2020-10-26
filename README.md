@@ -1,4 +1,4 @@
-# A Cargo-Shipping Microservice
+# Cargo-Shipping Microservice
 
 it provides **booking**, **handling** and **tracking** services via *http* and *grpc* transportation.
 
